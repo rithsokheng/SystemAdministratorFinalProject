@@ -1,4 +1,11 @@
 # Setting Static IPs (Netplan)
+
+- [Main project README](../README.md)
+- [VM 1: Web Server script](vm1.sh) | [manual](../manual/Member1.md)
+- [VM 2: DNS Server script](vm2.sh) | [manual](../manual/Member2.md)
+- [VM 3: File Server script](vm3.sh) | [manual](../manual/Member3.md)
+- [Manual directory index](../manual/README.md)
+
 1. Find your network interface name (usually enp0s3 or ens33 on VMware) by typing: 
 ```bash
 ip a

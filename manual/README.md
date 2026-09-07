@@ -1,5 +1,11 @@
 # Prerequisites (All 3 Members)
 
+- [Main project README](../README.md)
+- [VM 1: Web Server manual](Member1.md) | [automation script](../script/vm1.sh)
+- [VM 2: DNS Server manual](Member2.md) | [automation script](../script/vm2.sh)
+- [VM 3: File Server manual](Member3.md) | [automation script](../script/vm3.sh)
+- [Script directory index](../script/README.md)
+
 Before configuring the services, all members must manually set up their Static IPs.
 
 1. Run `ip a` to find the network interface name (e.g., `ens33` or `enp0s3`).

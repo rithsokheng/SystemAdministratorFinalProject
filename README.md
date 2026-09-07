@@ -1,10 +1,13 @@
-# System Administrator - Final Project
 
-This document outlines the architecture, configuration requirements, and expected outcomes for our virtualized server environment for our team members.
+# System Administration - Final Project
+
+This repository contains the architecture, configuration requirements, and expected outcomes for our virtualized server environment for our team members.
 
 ## Network Topology
 
-```
+All servers and the client machine are connected via a shared Wireless HotSpot.
+
+```text
 +----------+     +-----------------+
 | INTERNET |-----| WIRELESS HOTSPOT|
 +----------+     +--------+--------+
@@ -16,28 +19,42 @@ This document outlines the architecture, configuration requirements, and expecte
   | WEB       |     | DNS       |     |           |     | SERVER    |
   | SERVER    |     | SERVER    |     |           |     |           |
   +-----------+     +-----------+     +-----------+     +-----------+
-  ```
+
+```
+
+### IP Addressing Scheme
+
+All machines operate on a static IP configuration within the same subnet.
+
+| Device | Role | OS | Static IP |
+| --- | --- | --- | --- |
+| **HotSpot** | Gateway / Router | N/A | `192.168.10.1` |
+| **Server 1** | Web Server (Apache) | Ubuntu Server | `192.168.10.11` |
+| **Server 2** | DNS Server (BIND9) | Ubuntu Server | `192.168.10.12` |
+| **Server 3** | File Server (Samba) | Ubuntu Server | `192.168.10.13` |
+| **Client** | Demo / Testing Node | Windows/Linux | `192.168.10.50` |
 
 ---
 
-## Configuration Instructions
+##  Configuration Instructions
 
-Based on the project requirements, please install and configure the servers to operate as follows:
+Use the dedicated documentation and setup scripts instead of repeating the complete configuration here:
 
-1. **Network Configuration:** Set **Static IP Addresses** for all Client computers and Servers. All devices must be in the same network range (you are free to define the specific IP range yourself).
-2. **Remote Access (SSH):** Enable the **SSH service** on all three servers so the Client computer can access them remotely using the PuTTY application.
-3. **Web Server Setup:** Install the Web Server on VMWare on the *first* computer. It must host the group's custom website (**Note:** The default web server landing page is not acceptable).
-4. **DNS Server Setup:** Install the DNS Server on VMWare on the *second* computer. Configure it to map a DNS domain name to the Web Server (located on the first computer). This will allow the Client computer to access the group's website via the custom domain name.
-5. **File Server Setup:** Install and configure a File Server using **SAMBA**. This must allow the Client computer to upload and download files to and from the server.
-6. **Client Configuration:** Install the **PuTTY** (Alternative: SSH via terminal) application on the Client computer to establish remote connections to the three servers. This Client machine will be used to present and demonstrate the entire project.
-7. **Network Connectivity:** Ensure the Client computer and all three Servers are connected to each other using the shared Wireless HotSpot.
+1. Follow the shared [global prerequisites](manual/README.md), including the Netplan static IP setup.
+2. Use the [Member 1 manual](manual/Member1.md) for the Web Server or run [`script/vm1.sh`](script/vm1.sh).
+3. Use the [Member 2 manual](manual/Member2.md) for the DNS Server or run [`script/vm2.sh`](script/vm2.sh).
+4. Use the [Member 3 manual](manual/Member3.md) for the File Server or run [`script/vm3.sh`](script/vm3.sh).
+
+The setup scripts are intended to be run as `root` on their corresponding virtual machine. Review each script before execution and complete the manual prerequisite steps first.
 
 ---
 
-## Expected Outcomes
+##  Expected Outcomes
 
-Once the configuration is complete, you must be able to verify the following results from the **Client** computer:
+Once the configuration is complete, the following results can be verified from the **Client** computer:
 
-+ Successfully connect remotely to all three Servers via SSH.
-+ Successfully load the custom website using **both** the server's IP Address and the configured Domain Name.
+1. **Remote Access:** Successfully connect remotely to all three Servers via SSH (using PuTTY or terminal).
+2. **Web Hosting & DNS:** Successfully load the custom website using **both** the server's IP Address (`192.168.10.11`) and the configured Domain Name (`www.groupproject.local`).
+3. **File Sharing:** Successfully read, write, upload, and download files from the File Server via the network directory.
+
 
