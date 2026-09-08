@@ -10,7 +10,7 @@ systemctl enable --now ssh
 systemctl enable --now apache2
 
 # Create a custom website for the 3-member team
-cat <<EOF > /var/www/html/index.html
+cat <<'EOF' > /var/www/html/index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
