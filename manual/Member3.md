@@ -1,4 +1,4 @@
-# Member 3: File Server Configuration (IP: 192.168.10.13)
+# Member 3: File Server Configuration (IP: 10.69.116.13)
 
 **Task:** Install Samba, configure SSH, and create a public folder for easy upload/download during the live demo.
 

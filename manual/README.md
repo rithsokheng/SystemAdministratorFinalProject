@@ -1,7 +1,15 @@
 # Prerequisites (All 3 Members)
 
 - [Main project README](../README.md)
-- [VM 1: Web Server manual](Member1.md) | [automation script](../script/vm1.sh)
+- [VM 1: Web Server manual](Member1.md) | [automation script](../script/vm1.sh)All machines operate on a static IP configuration within the same subnet.
+
+| Device | Role | OS | Static IP |
+| --- | --- | --- | --- |
+| **HotSpot** | Gateway / Router | N/A | `10.69.116.1` |
+| **Server 1** | Web Server (Apache) | Ubuntu Server | `10.69.116.11` |
+| **Server 2** | DNS Server (BIND9) + Nginx Reverse Proxy | Ubuntu Server | `10.69.116.12` |
+| **Server 3** | File Server (Samba) | Ubuntu Server | `10.69.116.13` |
+| **Client** | Demo / Testing Node | Windows/Linux | `10.69.116.50` |
 - [VM 2: DNS Server manual](Member2.md) | [automation script](../script/vm2.sh)
 - [VM 3: File Server manual](Member3.md) | [automation script](../script/vm3.sh)
 - [Script directory index](../script/README.md)

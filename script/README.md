@@ -21,13 +21,13 @@ network:
     ens33:                  # Replace with your actual interface name
       dhcp4: false
       addresses:
-        - 192.168.10.11/24  # Change to .12 for DNS, .13 for File Server
+        - 10.69.116.11/24  # Change to .12 for DNS, .13 for File Server
       routes:
         - to: default
-          via: 192.168.10.1 # Your HotSpot Gateway IP
+          via: 10.69.116.1 # Your HotSpot Gateway IP
       nameservers:
         addresses:
-          - 192.168.10.12   # Point ALL servers to your DNS Server
+          - 10.69.116.12   # Point ALL servers to your DNS Server
           - 8.8.8.8
   version: 2
 ```

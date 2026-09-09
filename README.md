@@ -28,11 +28,11 @@ All machines operate on a static IP configuration within the same subnet.
 
 | Device | Role | OS | Static IP |
 | --- | --- | --- | --- |
-| **HotSpot** | Gateway / Router | N/A | `192.168.10.1` |
-| **Server 1** | Web Server (Apache) | Ubuntu Server | `192.168.10.11` |
-| **Server 2** | DNS Server (BIND9) | Ubuntu Server | `192.168.10.12` |
-| **Server 3** | File Server (Samba) | Ubuntu Server | `192.168.10.13` |
-| **Client** | Demo / Testing Node | Windows/Linux | `192.168.10.50` |
+| **HotSpot** | Gateway / Router | N/A | `10.69.116.1` |
+| **Server 1** | Web Server (Apache) | Ubuntu Server | `10.69.116.11` |
+| **Server 2** | DNS Server (BIND9) + Nginx Reverse Proxy | Ubuntu Server | `10.69.116.12` |
+| **Server 3** | File Server (Samba) | Ubuntu Server | `10.69.116.13` |
+| **Client** | Demo / Testing Node | Windows/Linux | `10.69.116.50` |
 
 ---
 
@@ -54,7 +54,8 @@ The setup scripts are intended to be run as `root` on their corresponding virtua
 Once the configuration is complete, the following results can be verified from the **Client** computer:
 
 1. **Remote Access:** Successfully connect remotely to all three Servers via SSH (using PuTTY or terminal).
-2. **Web Hosting & DNS:** Successfully load the custom website using **both** the server's IP Address (`192.168.10.11`) and the configured Domain Name (`www.groupproject.local`).
-3. **File Sharing:** Successfully read, write, upload, and download files from the File Server via the network directory.
+2. **Web Hosting & DNS:** Successfully load the custom website using **both** the server's IP Address (`10.69.116.11`) and the configured Domain Name (`www.groupproject.local`).
+3. **Reverse Proxy:** Successfully load the same website by browsing to the DNS Server's IP (`10.69.116.12`), confirming Nginx is proxying traffic to the Apache backend.
+4. **File Sharing:** Successfully read, write, upload, and download files from the File Server via the network directory.
 
 

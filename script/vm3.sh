@@ -14,7 +14,7 @@ chmod 2777 /srv/samba/team_share
 chown nobody:nogroup /srv/samba/team_share
 
 # Append the share configuration to the Samba config file
-cat <<EOF >> /etc/samba/smb.conf
+cat <<'EOF' > /etc/samba/smb.conf
 
 [TeamProject_Share]
    path = /srv/samba/team_share
