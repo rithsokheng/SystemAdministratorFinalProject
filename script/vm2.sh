@@ -1,5 +1,5 @@
 #!/bin/bash
-# run as root on VM 2 (DNS Server + Nginx Reverse Proxy)
+# Run as root on VM 2 (DNS Server + Nginx Reverse Proxy)
 
 # Update and install BIND9, Nginx, and SSH
 apt update && apt upgrade -y
@@ -26,9 +26,11 @@ else
     echo "DNS zone already exists in named.conf.local — skipping"
 fi
 
-# Create the forward lookup zone file mapping to the Web Server (10.69.116.11)
+# Create the forward lookup zone file
+# Web Server: 10.69.116.11
+# DNS/Proxy Server: 10.69.116.12
 cat <<'EOF' > /etc/bind/db.groupproject.local
-\$TTL    604800
+$TTL    604800
 @       IN      SOA     ns1.groupproject.local. admin.groupproject.local. (
                               2         ; Serial
                          604800         ; Refresh
@@ -42,7 +44,11 @@ ns1     IN      A       10.69.116.12
 www     IN      A       10.69.116.11
 EOF
 
-# Restart and enable BIND9 (named.service is the real unit on Ubuntu 25.04+)
+# Check BIND configuration before restarting
+named-checkconf
+named-checkzone groupproject.local /etc/bind/db.groupproject.local
+
+# Restart and enable BIND9
 systemctl restart named
 systemctl enable --now named
 
@@ -53,7 +59,7 @@ systemctl enable --now named
 # Remove the default Nginx site so it does not conflict
 rm -f /etc/nginx/sites-enabled/default
 
-# Create a reverse proxy virtual host that forwards to the Apache Web Server
+# Create a reverse proxy virtual host
 cat <<'EOF' > /etc/nginx/sites-available/reverse-proxy
 server {
     listen 80;
@@ -70,10 +76,13 @@ server {
 EOF
 
 # Enable the reverse proxy site
-ln -sf /etc/nginx/sites-available/reverse-proxy /etc/nginx/sites-enabled/reverse-proxy
+ln -sf /etc/nginx/sites-available/reverse-proxy \
+       /etc/nginx/sites-enabled/reverse-proxy
 
-# Test the Nginx configuration and start the service
+# Test the Nginx configuration
 nginx -t
+
+# Restart and enable Nginx
 systemctl restart nginx
 systemctl enable --now nginx
 
