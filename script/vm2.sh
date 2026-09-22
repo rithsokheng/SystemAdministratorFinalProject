@@ -56,8 +56,8 @@ else
 fi
 
 # Create the forward lookup zone file
-# NOTE: Points to 10.69.116.12 (Nginx Proxy) so traffic flows through reverse proxy.
-# (If your grading strictly demands pointing directly to Apache 10.69.116.11, change .12 to .11)
+# NOTE: Points to 192.168.1.252 (Nginx Proxy) so traffic flows through reverse proxy.
+# (If your grading strictly demands pointing directly to Apache 192.168.1.251, change .252 to .251)
 cat <<'EOF' > /etc/bind/db.m2g10.istad
 $TTL    604800
 @       IN      SOA     ns1.m2g10.istad. admin.m2g10.istad. (
@@ -68,9 +68,9 @@ $TTL    604800
                            604800 )       ; Negative Cache TTL
 ;
 @       IN      NS      ns1.m2g10.istad.
-ns1     IN      A       10.69.116.12
-@       IN      A       10.69.116.12
-www     IN      A       10.69.116.12
+ns1     IN      A       192.168.1.252
+@       IN      A       192.168.1.252
+www     IN      A       192.168.1.252
 EOF
 
 # Validate BIND9 configuration
@@ -92,10 +92,10 @@ rm -f /etc/nginx/sites-enabled/default
 cat <<'EOF' > /etc/nginx/sites-available/reverse-proxy
 server {
     listen 80;
-    server_name m2g10.istad www.m2g10.istad 10.69.116.12;
+    server_name m2g10.istad www.m2g10.istad 192.168.1.252;
 
     location / {
-        proxy_pass         http://10.69.116.11:80;
+        proxy_pass         http://192.168.1.251:80;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
