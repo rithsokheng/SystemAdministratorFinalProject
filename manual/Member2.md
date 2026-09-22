@@ -1,6 +1,6 @@
-# Member 2: DNS Server + Nginx Reverse Proxy (IP: 10.69.116.12)
+# Member 2: DNS Server + Nginx Reverse Proxy (IP: 192.168.1.252)
 
-**Task:** Install BIND9, Nginx, SSH, and UFW. Configure authoritative DNS resolution for `m2g10.istad` pointing to the Nginx reverse proxy (or Web Server), and configure Nginx as a reverse proxy that forwards HTTP traffic to the Apache Web Server on VM1 (`10.69.116.11:80`).
+**Task:** Install BIND9, Nginx, SSH, and UFW. Configure authoritative DNS resolution for `m2g10.istad` pointing to the Nginx reverse proxy (or Web Server), and configure Nginx as a reverse proxy that forwards HTTP traffic to the Apache Web Server on VM1 (`192.168.1.251:80`).
 
 ---
 
@@ -71,7 +71,7 @@ Open the new zone file:
 sudo nano /etc/bind/db.m2g10.istad
 ```
 
-Paste the following configuration (points to `10.69.116.12` so traffic routes through the Nginx reverse proxy):
+Paste the following configuration (points to `192.168.1.252` so traffic routes through the Nginx reverse proxy):
 ```text
 $TTL    604800
 @       IN      SOA     ns1.m2g10.istad. admin.m2g10.istad. (
@@ -82,11 +82,11 @@ $TTL    604800
                            604800 )       ; Negative Cache TTL
 ;
 @       IN      NS      ns1.m2g10.istad.
-ns1     IN      A       10.69.116.12
-@       IN      A       10.69.116.12
-www     IN      A       10.69.116.12
+ns1     IN      A       192.168.1.252
+@       IN      A       192.168.1.252
+www     IN      A       192.168.1.252
 ```
-> **Note:** If grading strictly requires the DNS A records to resolve directly to Apache (`10.69.116.11`), change `.12` to `.11`.
+> **Note:** If grading strictly requires the DNS A records to resolve directly to Apache (`192.168.1.251`), change `.252` to `.251`.
 
 6. **Validate BIND9 configuration:**
 ```bash
@@ -104,7 +104,7 @@ sudo systemctl enable --now named
 
 ## Part 3 — Nginx Reverse Proxy Setup
 
-Nginx listens on port 80 of this server (`10.69.116.12`) and forwards all incoming HTTP requests to the Apache Web Server on VM1 (`10.69.116.11:80`).
+Nginx listens on port 80 of this server (`192.168.1.252`) and forwards all incoming HTTP requests to the Apache Web Server on VM1 (`192.168.1.251:80`).
 
 8. **Remove the default Nginx site:**
 ```bash
@@ -120,10 +120,10 @@ Paste the following configuration:
 ```nginx
 server {
     listen 80;
-    server_name m2g10.istad www.m2g10.istad 10.69.116.12;
+    server_name m2g10.istad www.m2g10.istad 192.168.1.252;
 
     location / {
-        proxy_pass         http://10.69.116.11:80;
+        proxy_pass         http://192.168.1.251:80;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
@@ -144,19 +144,19 @@ sudo systemctl enable --now nginx
 
 ## Part 4 — Verification
 
-From the **Client** machine (`10.69.116.50` with DNS configured to `10.69.116.12`):
+From the **Client** machine (`192.168.1.50` with DNS configured to `192.168.1.252`):
 
 1. **Verify DNS Name Resolution:**
 ```bash
-nslookup www.m2g10.istad 10.69.116.12
-nslookup m2g10.istad 10.69.116.12
+nslookup www.m2g10.istad 192.168.1.252
+nslookup m2g10.istad 192.168.1.252
 ```
-It should resolve to `10.69.116.12`.
+It should resolve to `192.168.1.252`.
 
 2. **Verify Reverse Proxy & Web Access:**
-- Open browser to `http://10.69.116.12`
+- Open browser to `http://192.168.1.252`
 - Open browser to `http://www.m2g10.istad` or `http://m2g10.istad`
 
-Both should load the custom web application hosted on VM1 (`10.69.116.11`), confirming that BIND9 resolves the domain and Nginx forwards traffic properly.
+Both should load the custom web application hosted on VM1 (`192.168.1.251`), confirming that BIND9 resolves the domain and Nginx forwards traffic properly.
 
 ---
