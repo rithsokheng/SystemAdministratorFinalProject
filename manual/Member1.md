@@ -1,4 +1,4 @@
-# Member 1: Web Server Configuration (IP: 10.69.116.11)
+# Member 1: Web Server Configuration (IP: 192.168.1.251)
 
 **Task:** Install Apache, configure SSH, and set up a custom website to meet the "default website not acceptable" requirement.
 
