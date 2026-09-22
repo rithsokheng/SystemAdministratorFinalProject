@@ -54,7 +54,7 @@ The setup scripts are intended to be run as `root` on their corresponding virtua
 Once the configuration is complete, the following results can be verified from the **Client** computer:
 
 1. **Remote Access:** Successfully connect remotely to all three Servers via SSH (using PuTTY or terminal).
-2. **Web Hosting & DNS:** Successfully load the custom website using **both** the server's IP Address (`10.69.116.11`) and the configured Domain Name (`www.groupproject.local`).
+2. **Web Hosting & DNS:** Successfully load the custom website using the server's IP Address (`10.69.116.11`), the reverse proxy IP (`10.69.116.12`), and the configured Domain Name (`www.m2g10.istad` or `m2g10.istad`).
 3. **Reverse Proxy:** Successfully load the same website by browsing to the DNS Server's IP (`10.69.116.12`), confirming Nginx is proxying traffic to the Apache backend.
 4. **File Sharing:** Successfully read, write, upload, and download files from the File Server via the network directory.
 
